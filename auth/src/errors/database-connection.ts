@@ -6,8 +6,7 @@ export class DatabaseConnectionError extends CustomError {
     status = 500;
 
     constructor(private errors: ValidationError[]) {
-        super();
-
+        super('Error connecting to database');
         Object.setPrototypeOf(this, DatabaseConnectionError.prototype);
     }
 
