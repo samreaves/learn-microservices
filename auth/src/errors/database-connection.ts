@@ -1,5 +1,5 @@
 import { ValidationError } from 'express-validator';
-import { CustomError } from './custom-error';
+import { CustomError } from './';
 
 export class DatabaseConnectionError extends CustomError {
     reason = 'Error connecting to database';
