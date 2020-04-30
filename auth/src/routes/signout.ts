@@ -1,8 +1,9 @@
 import express from 'express';
+import { SIGNOUT_ROUTE } from '../constants';
 
 const router = express.Router();
 
-router.post('/api/users/signout', (req, res) => {
+router.post(SIGNOUT_ROUTE, (req, res) => {
     req.session = null;
     res.sendStatus(200)
 });

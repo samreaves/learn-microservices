@@ -4,6 +4,7 @@ import { body } from 'express-validator';
 import { validateRequest } from '../middeware';
 import { User } from '../models/User';
 import { ExistingUserError, EnvironmentVariableMissing } from '../errors';
+import { SIGNUP_ROUTE } from '../constants';
 
 const { JWT_KEY } = process.env;
 if (!JWT_KEY) {
@@ -13,7 +14,7 @@ if (!JWT_KEY) {
 const router = express.Router();
 
 router.post(
-    '/api/users/signup', 
+    SIGNUP_ROUTE, 
     [
         body('email')
             .isEmail()

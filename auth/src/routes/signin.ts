@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 import { InvalidUsernameOrPassword, EnvironmentVariableMissing } from '../errors';
 import { User } from '../models';
 import { Password } from '../services';
+import { SIGNIN_ROUTE } from '../constants'; 
+
 
 const { JWT_KEY } = process.env;
 if (!JWT_KEY) {
@@ -14,7 +16,7 @@ if (!JWT_KEY) {
 const router = express.Router();
 
 router.post(
-    '/api/users/signin', 
+    SIGNIN_ROUTE, 
     [
         body('email')
             .isEmail()

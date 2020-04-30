@@ -1,30 +1,6 @@
-import express from 'express';
-import 'express-async-errors';
-import { json } from 'body-parser';
+
 import mongoose from 'mongoose';
-import cookieSession from 'cookie-session';
-import { errorHandler } from './middeware';
-import { NotFoundError } from './errors';
-import { currentUserRouter, signInRouter, signOutRouter, signUpRouter } from './routes';
-
-const app = express();
-app.set('trust proxy', true);
-app.use(json());
-app.use(cookieSession({
-    signed: false,
-    secure: true
-}));
-
-app.use(currentUserRouter);
-app.use(signInRouter);
-app.use(signOutRouter);
-app.use(signUpRouter);
-
-app.use('*', () => {
-    throw new NotFoundError();
-});
-
-app.use(errorHandler);
+import { app } from './app';
 
 const start = async () => {
     try {
