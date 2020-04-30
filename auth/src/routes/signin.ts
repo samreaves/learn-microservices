@@ -2,9 +2,14 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { validateRequest } from '../middeware';
 import jwt from 'jsonwebtoken';
-import { InvalidUsernameOrPassword } from '../errors';
+import { InvalidUsernameOrPassword, EnvironmentVariableMissing } from '../errors';
 import { User } from '../models';
 import { Password } from '../services';
+
+const { JWT_KEY } = process.env;
+if (!JWT_KEY) {
+    throw new EnvironmentVariableMissing('JWT_KEY');
+}
 
 const router = express.Router();
 
@@ -40,7 +45,7 @@ router.post(
         const userJWT = jwt.sign({
             id: existingUser.id,
             email: existingUser.email
-        }, `${process.env.JWT_KEY}`);
+        }, `${JWT_KEY}`);
 
         req.session = {
             jwt: userJWT
