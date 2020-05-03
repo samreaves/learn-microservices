@@ -16,8 +16,10 @@ it('returns a 200 and the user', async () => {
 });
 
 it('returns a 401 if not signed in', async () => {
-    await request(app)
+    const userResponse = await request(app)
         .get(CURRENT_USER_ROUTE)
         .send()
-        .expect(401);
+        .expect(200);
+    
+    expect(userResponse.body.currentUser).toEqual(null);
 });

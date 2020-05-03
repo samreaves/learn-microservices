@@ -12,6 +12,7 @@ if (!NODE_ENV) {
 }
 
 const app = express();
+app.disable('x-powered-by');
 app.set('trust proxy', true);
 app.use(json());
 app.use(cookieSession({
