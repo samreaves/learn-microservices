@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { EnvironmentVariableMissing } from '../errors';
+import { EnvironmentVariableMissing } from '@sr-ticketing/common';
 
 const { JWT_KEY } = process.env;
 if (!JWT_KEY) {

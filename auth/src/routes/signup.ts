@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { body } from 'express-validator';
-import { validateRequest } from '../middeware';
+import { validateRequest, ExistingUserError, EnvironmentVariableMissing } from '@sr-ticketing/common';
 import { User } from '../models/User';
-import { ExistingUserError, EnvironmentVariableMissing } from '../errors';
 import { SIGNUP_ROUTE } from '../constants';
 
 const { JWT_KEY } = process.env;
