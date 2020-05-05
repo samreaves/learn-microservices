@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { validateRequest } from '../middeware';
+import { validateRequest, InvalidUsernameOrPassword, EnvironmentVariableMissing } from '@sr-ticketing/common';
 import jwt from 'jsonwebtoken';
-import { InvalidUsernameOrPassword, EnvironmentVariableMissing } from '../errors';
 import { User } from '../models';
 import { Password } from '../services';
 import { SIGNIN_ROUTE } from '../constants'; 
