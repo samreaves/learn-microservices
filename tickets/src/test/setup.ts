@@ -1,10 +1,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import request from 'supertest';
 import jwt from 'jsonwebtoken';
-import { app } from '../app';
 import { EnvironmentVariableMissing } from '@sr-ticketing/common';
-import { SIGNUP_ROUTE } from '../constants';
 
 const { JWT_KEY } = process.env;
 if (!JWT_KEY) {

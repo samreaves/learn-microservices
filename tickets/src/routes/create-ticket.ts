@@ -14,7 +14,7 @@ router.post(
             .trim()
             .withMessage('title must be valid'),
         body('price')
-            .isString()
+            .isFloat()
             .withMessage('price must be valid')
     ],
     requireAuth,
@@ -22,8 +22,15 @@ router.post(
     async (req: Request, res: Response) => {
 
         const { title, price } = req.body;
+
+        const ticket = Ticket.build({
+            title,
+            price,
+            userId: req.currentUser!.id
+        });
+        await ticket.save();
         
-        res.sendStatus(201);    
+        res.sendStatus(201).send({ title, price});    
 });
 
 export { router as createTicketRouter };
