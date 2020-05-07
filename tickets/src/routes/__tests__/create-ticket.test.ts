@@ -26,7 +26,7 @@ it('returns an error if there is no input, but authenticated', async () => {
         .expect(400);
 });
 
-it('returns an error if there is an invalid title', async () => {
+it('returns an error if there missing title', async () => {
     const response = await request(app)
         .post(CREATE_TICKET_ROUTE)
         .set('Cookie', global.signUp())
@@ -36,12 +36,34 @@ it('returns an error if there is an invalid title', async () => {
         .expect(400);
 });
 
-it('returns an error if there is an invalid price', async () => {
+it('returns an error if missing price', async () => {
     const response = await request(app)
     .post(CREATE_TICKET_ROUTE)
     .set('Cookie', global.signUp())
     .send({
-        title: 'Atlanta United vs Portland Timbers'
+        title: 'Atlanta United vs Portland Timbers',
+    })
+    .expect(400);
+});
+
+it('returns an error if there is an invalid title', async () => {
+    const response = await request(app)
+        .post(CREATE_TICKET_ROUTE)
+        .set('Cookie', global.signUp())
+        .send({
+            title: 25,
+            price: 25
+        })
+        .expect(400);
+});
+
+it('returns an error if invalid price', async () => {
+    const response = await request(app)
+    .post(CREATE_TICKET_ROUTE)
+    .set('Cookie', global.signUp())
+    .send({
+        title: 'Atlanta United vs Portland Timbers',
+        price: -30
     })
     .expect(400);
 });
@@ -66,4 +88,6 @@ it('creates a ticket with valid inputs', async () => {
     expect(tickets.length).toEqual(1);
     expect(tickets[0].title).toEqual(title);
     expect(tickets[0].price).toEqual(price);
+    expect(tickets[0].userId as String).toBeDefined();
+    expect(tickets[0].id as String).toBeDefined();
 });

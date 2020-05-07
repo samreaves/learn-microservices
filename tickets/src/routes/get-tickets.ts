@@ -8,7 +8,9 @@ router.get(
     GET_TICKETS_ROUTE, 
     async (req: Request, res: Response) => {
 
-        res.sendStatus(200)  
+        const tickets = await Ticket.find();
+
+        res.status(200).send(tickets);  
 });
 
 export { router as getTicketsRouter };

@@ -12,10 +12,12 @@ router.post(
         body('title')
             .isString()
             .trim()
-            .withMessage('title must be valid'),
+            .not()
+            .isEmpty()
+            .withMessage('title must be a valid string'),
         body('price')
-            .isFloat()
-            .withMessage('price must be valid')
+            .isFloat({ gt: 0})
+            .withMessage('price must be provided and greater than 0')
     ],
     requireAuth,
     validateRequest,
@@ -30,7 +32,7 @@ router.post(
         });
         await ticket.save();
         
-        res.sendStatus(201).send({ title, price});    
+        res.status(201).send({ title, price}); 
 });
 
 export { router as createTicketRouter };

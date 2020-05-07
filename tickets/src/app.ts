@@ -3,7 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, EnvironmentVariableMissing, currentUser } from '@sr-ticketing/common';
-import { createTicketRouter } from './routes';
+import { createTicketRouter, getTicketByIDRouter, getTicketsRouter, updateTicketRouter } from './routes';
 
 const { NODE_ENV } = process.env;
 if (!NODE_ENV) {
@@ -21,6 +21,9 @@ app.use(cookieSession({
 app.use(currentUser);
 
 app.use(createTicketRouter);
+app.use(getTicketByIDRouter);
+app.use(getTicketsRouter);
+app.use(updateTicketRouter);
 
 app.use('*', () => {
     throw new NotFoundError();
