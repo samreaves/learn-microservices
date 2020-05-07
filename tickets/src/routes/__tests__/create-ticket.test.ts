@@ -86,8 +86,13 @@ it('creates a ticket with valid inputs', async () => {
 
     tickets = await Ticket.find({});
     expect(tickets.length).toEqual(1);
+    const dataTicket = tickets[0];
     expect(tickets[0].title).toEqual(title);
     expect(tickets[0].price).toEqual(price);
     expect(tickets[0].userId as String).toBeDefined();
     expect(tickets[0].id as String).toBeDefined();
+    expect(response.body.title).toEqual(title);
+    expect(response.body.price).toEqual(price);
+    expect(response.body.userId).toEqual(dataTicket.userId);
+    expect(response.body.id).toEqual(dataTicket.id);
 });

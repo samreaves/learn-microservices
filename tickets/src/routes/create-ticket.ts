@@ -32,7 +32,7 @@ router.post(
         });
         await ticket.save();
         
-        res.status(201).send({ title, price}); 
+        res.status(201).send(ticket); 
 });
 
 export { router as createTicketRouter };
