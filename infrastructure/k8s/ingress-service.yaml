@@ -17,6 +17,13 @@ spec:
     - host: ticketing.dev
       http:
         paths:
+          - path: /api/tickets/?(.*)
+            backend: 
+              serviceName: tickets-clusterip-service
+              servicePort: 3000
+    - host: ticketing.dev
+      http:
+        paths:
           - path: /?(.*)
             backend: 
               serviceName: client-clusterip-service

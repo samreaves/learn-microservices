@@ -1,9 +1,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { EnvironmentVariableMissing } from '@sr-ticketing/common';
-import { app } from '../app';
-import { SIGNUP_ROUTE } from '../constants';
 
 const { JWT_KEY } = process.env;
 if (!JWT_KEY) {
@@ -12,32 +10,26 @@ if (!JWT_KEY) {
 
 jest.setTimeout(30000)
 
-interface SignUpMock {
-    email: string,
-    password: string,
-    cookie: string[]
-}
-
 declare global {
     namespace NodeJS {
         interface Global {
-            signUp(): Promise<SignUpMock>
+            signUp(): string[]
         }
     }
 }
 
-global.signUp = async () => {
-    const email = 'test@test.com';
-    const password = 'password';
-    const response = await request(app)
-        .post(SIGNUP_ROUTE)
-        .send({
-            email,
-            password
-        })
-        .expect(201);
+global.signUp = () => {
+    const payload = {
+        id: '1lk24j124l',
+        email: 'test@test.com'
+    };
 
-    return { email, password, cookie: response.get('Set-Cookie') };
+    const token = jwt.sign(payload, JWT_KEY);
+    const session = { jwt: token };
+    const sessionJSON = JSON.stringify(session);
+    const base64 = Buffer.from(sessionJSON).toString('base64');
+
+    return [`express:sess=${base64}`];
 }
 
 let mongo: any;
